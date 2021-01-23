@@ -11,25 +11,6 @@ This tool is meant for researchers to test different methods of text-classificat
 
 These instructions assume you have either downloaded or cloned the source code from its available repository.
 
-### Installing the required node modules
-
-This application was created using create-react-app, which uses node.js to serve the application.
-If you have not already, install the latest stable release of node from [nodejs.org](https://nodejs.org/).
-
-`cd` into the project directory and run `npm install` to install the dependencies.
-
-### Setting up the python environment
-
-The machine-learning part of this application uses python in the backend. Make sure you have at least python 3.7 on your system. If not you can download the latest version from [python.org](https://www.python.org/).
-
-It is highly recommended to set up a virtual environment for Python for this project. You can read more about setting up virtual environments [here](https://docs.python.org/3/tutorial/venv.html). You can use the following recommended setup:  
-`cd src/classification`  
-`python -m venv classification-venv`  
-
-Activating the virtual environment depends on your operating system, please refer to the documentation to find out how to activate your virtual environment. *Note: If you are on Windows and using Powershell, replace `activate.bat` with `Activate.ps1`.*
-
-Once you have set up your virtual environment and have activated it, you can install the python dependencies by running `pip install -r requirements.txt`.
-
 ### Adding a dataset
 
 For the application to run correctly, a document dataset needs to be added. Navigate to the `classification` directory and create a new `data` folder. Within this folder, add your documents (these should be .txt files).
@@ -38,23 +19,19 @@ Open `file_handler.py` for editing and change the `DOC_DIRECTORY` variable to be
 
 ## Running the application
 
-Running the application is made of two steps:  
-1. Running the Python flask server for the React application to interact with.
-2. Running the React application.
+The application uses docker and docker-compose to handle local deployment.
 
-### flask run
+Ensure docker is installed and running on your device. Then run the following in the terminal:
 
-The environment variables for the flask server to run are set in the `.flaskenv` file. Therefore starting the server only requires one command. Ensure you are in the `classification` directory and run `flask run`.
+``` bash
+docker-compose build
+docker-compose up
 
-You should see some output with the last line saying `Running on http://127.0.0.1:5000/`.
+# Open the application on localhost:8000
+# Exit the application in the terminal with Ctrl+C
 
-### npm start
-
-Keep the python server running and open a new command line in the docview root directory (You should see the `node_modules` folder in this directory).
-
-Run `npm start`. This should open the application in your default browser.
-
-*Note: If you skipped adding a document dataset, you will see an infinite loading icon. Add a dataset as outlined above then refresh your browser to fix this. (You do not need to reset the servers, though you may see some error output in the flask server).*
+docker-compose down
+```
 
 ## Using the application
 
