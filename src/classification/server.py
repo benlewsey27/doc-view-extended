@@ -2,7 +2,6 @@
 
 from flask import Flask
 from flask import request
-from flask_cors import CORS
 import json
 import os
 
@@ -13,17 +12,12 @@ import file_handler
 import logistic_regression_classification as classification
 
 app = Flask(__name__)
-# Change this if your react server runs on a different port
-REACT_HOST = 'http://localhost:3000'
-# Configure Cross Origin Resource Sharing to allow requests 
-# from the React application
-cors = CORS(app, origins=REACT_HOST)
 
 FILE_ENCODING = 'utf-8'
 LABELS_FILE = './data/labels.json'
 PREDS_FILE = './data/predictions.json'
 
-@app.route('/get_data')
+@app.route('/api/get_data')
 def get_data():
     """
     Return the current label and prediction data from json data files.
@@ -73,7 +67,7 @@ def get_data():
         "docs": docs
     })
 
-@app.route('/add_labels', methods=['POST'])
+@app.route('/api/add_labels', methods=['POST'])
 def add_labels():
     """
     Run classification with new labels and return predictions.
@@ -120,7 +114,7 @@ def add_labels():
     # Return json response
     return json.dumps(predictions)
 
-@app.route('/reset_data')
+@app.route('/api/reset_data')
 def reset_data():
     """
     Reset the current label and prediction data.
@@ -132,3 +126,6 @@ def reset_data():
     os.remove(PREDS_FILE)
 
     return ('', 204)
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0')
