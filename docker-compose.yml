@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  backend:
+    container_name: doc-view-extended-backend
+    image: doc-view-extended-backend:latest
+    build: ./src/classification
+  
+  frontend:
+    container_name: doc-view-extended-frontend
+    image: doc-view-extended-frontend:latest
+    build: .
+    ports: 
+      - 8000:80

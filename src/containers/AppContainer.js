@@ -1,9 +1,6 @@
 import React from 'react';
 import { App } from '../App';
 
-// Change this if your flask server runs on a different port
-const FLASK_SERVER = "http://localhost:5000/";
-
 /**
  * React container component used to handle application level operations.
  * Renders the App Component.
@@ -98,7 +95,7 @@ export class AppContainer extends React.Component {
      * Fetch data from Python Flask server. 
      */
     getData() {
-        fetch(FLASK_SERVER + "get_data")
+        fetch("/api/get_data")
             .then(response => response.json())
             .then(data => {
                 let docs = data.docs;
@@ -137,7 +134,7 @@ export class AppContainer extends React.Component {
             this.setState({loading: true});
 
             // Use fetch with POST header to send data
-            fetch(FLASK_SERVER + "add_labels", {
+            fetch("/api/add_labels", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -180,7 +177,7 @@ export class AppContainer extends React.Component {
      * Send request to Python Flask server to reset label and prediction data.
      */
     resetData() {
-        fetch(FLASK_SERVER + "reset_data")
+        fetch("/api/reset_data")
             .then(this.getData());
     }
 
