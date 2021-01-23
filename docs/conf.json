@@ -1,0 +1,12 @@
+{
+    "recurseDepth": 10,
+    "source": {
+        "include": ["./src"],
+        "exclude": ["./src/classification"]
+    },
+    "sourceType": "module",
+    "tags": {
+        "allowUnknownTags": true,
+        "dictionaries": ["jsdoc"]
+    }
+}

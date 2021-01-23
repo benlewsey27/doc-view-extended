@@ -1,0 +1,159 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>server module &#8212; DocView Text Classification 1.0 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="naive_bayes_classification module" href="naive_bayes_classification.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="module-server">
+<span id="server-module"></span><h1>server module<a class="headerlink" href="#module-server" title="Permalink to this headline">¶</a></h1>
+<p>Flask server to allow React application to interact with python scripts</p>
+<dl class="py function">
+<dt id="server.add_labels">
+<code class="sig-prename descclassname">server.</code><code class="sig-name descname">add_labels</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#server.add_labels" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run classification with new labels and return predictions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Response object containing prediction data within JSON object</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="server.get_data">
+<code class="sig-prename descclassname">server.</code><code class="sig-name descname">get_data</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#server.get_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the current label and prediction data from json data files.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><p>Response object containing JSON data object. Object contains:</p>
+<ul class="simple">
+<li><p>labelled: boolean, true if document label data is present</p></li>
+<li><p>labelledDocs: object, contains document label data</p></li>
+<li><p>predictions: object, contains document prediction data</p></li>
+<li><p>docs: object, contains document text content</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="server.reset_data">
+<code class="sig-prename descclassname">server.</code><code class="sig-name descname">reset_data</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#server.reset_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reset the current label and prediction data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Empty 204 response object</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">DocView Text Classification</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="file_handler.html">file_handler module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="logistic_regression_classification.html">logistic_regression_classification module</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">classification</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="file_handler.html">file_handler module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="logistic_regression_classification.html">logistic_regression_classification module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="naive_bayes_classification.html">naive_bayes_classification module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">server module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="naive_bayes_classification.html">naive_bayes_classification module</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">server module</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="modules.html">classification</a><ul>
+      <li>Previous: <a href="naive_bayes_classification.html" title="previous chapter">naive_bayes_classification module</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, Etienne Badoche.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/server.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

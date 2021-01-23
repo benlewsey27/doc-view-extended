@@ -1,0 +1,23 @@
+"""
+Module for handling dataset files.
+
+Edit this module if your directory structure has changed.
+"""
+
+import os
+
+# The directory of documents to classify
+DOC_DIRECTORY = './data/research_papers/'
+
+def load_files():
+    """
+    Return a list of files in the DOC_DIRECTORY.
+
+    :returns: A list of file names
+    """
+    files = []
+    # Get list of files in directory with relative paths
+    for file in os.listdir(DOC_DIRECTORY):
+        files.append(file)
+
+    return files

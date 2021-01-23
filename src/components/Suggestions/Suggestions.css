@@ -1,0 +1,5 @@
+.suggestions {
+    width: 100%;
+    height: 35vh;
+    overflow-y: auto;
+}

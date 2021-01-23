@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: containers/DocListContainer.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: containers/DocListContainer.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React from 'react';
+import PropTypes from 'prop-types';
+
+import { DocList } from '../components/DocList/DocList';
+import { DocButton } from '../components/DocList/DocButton';
+
+
+/**
+ * React container component used to handle DocList operations.
+ * Renders the DocList Component.
+ */
+export class DocListContainer extends React.Component {
+    /**
+     * Set the initial state and bind methods.
+     * 
+     * @param {Object} props - The React props passed down from the parent
+     * component
+     * @constructor
+     */
+    constructor(props) {
+        super(props);
+        this.state = {
+            activeIndex: 0,
+            searchValue: '',
+        }
+        this.handleClick = this.handleClick.bind(this);
+        this.handleSearchChange = this.handleSearchChange.bind(this);
+    }
+
+    /**
+     * Change active document on click event.
+     * 
+     * @param {String} filename - Name of the file that was clicked on
+     * @param {Number} i - The index of the file that was clicked on
+     */
+    handleClick(filename, i) {
+        this.setState({activeIndex: i})
+        this.props.onDocChange(filename);
+    }
+
+    /**
+     * Update search string on input change event. 
+     * 
+     * @param {Object} event - The onChange event 
+     */
+    handleSearchChange(event) {
+        this.setState({searchValue: event.target.value})
+    }
+
+    /**
+     * Render the DocList component.
+     * 
+     * @returns {React.Component} - DocList Component
+     */
+    render() {
+        let fileList = [];
+        
+        // Check if docs object has been initialised
+        if (this.props.docs !== undefined) {
+            let filenames = Object.keys(this.props.docs);
+            
+            // Filter files based on search string
+            let filteredFilenames = filenames.filter(filename => {
+                return filename.toLowerCase()
+                    .includes(this.state.searchValue.toLowerCase());    
+            })
+            
+            // Map DocButton Component to each file in file list
+            fileList = filteredFilenames.map((filename, i) => {
+                let userLabelled = false;
+                let docLabel = '';
+                if (filename in this.props.labelledDocs) {
+                    userLabelled = true;
+                    docLabel = this.props.labelledDocs[filename];
+                } else if (filename in this.props.predictions) {
+                    docLabel = this.props.predictions[filename].label;
+                }
+
+                return(
+                    &lt;DocButton
+                        fileName={filename}
+                        key={filename}
+                        active={this.state.activeIndex === i}
+                        onItemClick={() => this.handleClick(filename, i)}
+                        userLabelled={userLabelled}
+                        label={docLabel}
+                    />
+                )
+            })
+        }
+        
+        return &lt;DocList 
+            docList={fileList} 
+            onSearchChange={this.handleSearchChange} />;
+    }
+}
+
+// React PropTypes object
+DocListContainer.propTypes = {
+    docs: PropTypes.object,
+    onDocChange: PropTypes.func.isRequired,
+    labelledDocs: PropTypes.object,
+    predictions: PropTypes.object
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AppContainer.html">AppContainer</a></li><li><a href="DocListContainer.html">DocListContainer</a></li><li><a href="LabelBarChart.html">LabelBarChart</a></li><li><a href="LabelModalContainer.html">LabelModalContainer</a></li><li><a href="ProbHistogram.html">ProbHistogram</a></li><li><a href="SuggestionsContainer.html">SuggestionsContainer</a></li><li><a href="VisualiserContainer.html">VisualiserContainer</a></li></ul><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#Body">Body</a></li><li><a href="global.html#DocButton">DocButton</a></li><li><a href="global.html#DocList">DocList</a></li><li><a href="global.html#LabelModal">LabelModal</a></li><li><a href="global.html#Navbar">Navbar</a></li><li><a href="global.html#Suggestions">Suggestions</a></li><li><a href="global.html#TextReader">TextReader</a></li><li><a href="global.html#Visualiser">Visualiser</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.4</a> on Thu Apr 30 2020 18:41:17 GMT+0100 (British Summer Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

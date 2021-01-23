@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: containers/VisualiserContainer.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: containers/VisualiserContainer.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React from 'react';
+import PropTypes from 'prop-types';
+
+import { Visualiser } from '../components/Visualiser/Visualiser';
+import { LabelBarChart } from '../visualisation/LabelBarChart';
+//import { ProbHistogram } from '../visualisation/ProbHistogram';
+
+const VISUALISER_ID = "visualiser";
+
+
+/**
+ * React container component used to handle Visualiser operations.
+ * Renders the Visualiser component and calls d3 graph operations.
+ */
+export class VisualiserContainer extends React.Component {
+    /**
+     * Set the initial state.
+     * 
+     * @param {Object} props - The React props passed down from the parent
+     * component
+     * @constructor
+     */
+    constructor(props) {
+        super(props);
+        this.state = {
+            svg: null
+        }
+
+        // Use ref to access rendered DOM node for width and height
+        this.ref = React.createRef();
+    }
+
+    /**
+     * React callback function. Create chart when component mounts.
+     */
+    componentDidMount() {
+        // Get DOM node width and height
+        let width = this.ref.current.offsetWidth;
+        let height = this.ref.current.offsetHeight;
+
+        if (this.props.labels !== undefined
+                &amp;&amp; this.props.labels.length !== 0) {
+            // Target appropriate data for visualisation object.
+            let data = {
+                labelledDocs: this.props.labelledDocs,
+                predictions: this.props.predictions,
+                labels: this.props.labels,
+                selectedLabel: this.getSelectedLabel()
+            }
+
+            // Create chart
+            let svg = new LabelBarChart(VISUALISER_ID, width, height, data);
+            this.setState({svg: svg});
+        }
+    }
+
+    /**
+     * React callback function. Update chart on every component update.
+     */
+    componentDidUpdate() {
+        // Get updated DOM node width and height
+        let width = this.ref.current.offsetWidth;
+        let height = this.ref.current.offsetHeight;
+        
+        if (this.props.labels !== undefined 
+                &amp;&amp; this.props.labels.length !== 0) {
+            // Target appropriate data for visualisation object
+            let data = {
+                labelledDocs: this.props.labelledDocs,
+                predictions: this.props.predictions,
+                labels: this.props.labels,
+                selectedLabel: this.getSelectedLabel()
+            }
+
+            // Update chart
+            this.state.svg.updateChart(width, height, data);
+        }
+    }
+
+    /**
+     * React callback function. Remove DOM element when component unmounts
+     * to avoid any issues.
+     */
+    componentWillUnmount() {
+        // Remove graph from DOM
+        let element = document.getElementById(VISUALISER_ID);
+        while (element.firstChild) {
+            element.removeChild(element.firstChild);
+        }
+    }
+
+
+    /**
+     * Get the label for the currently active doc (used in LabelBarChart for
+     * example).
+     * 
+     * @returns {String} - The active document's label
+     */
+    getSelectedLabel() {
+        // Get label for selected doc
+        let selectedLabel = '';
+        if (this.props.activeDoc in this.props.labelledDocs) {
+            selectedLabel = this.props.labelledDocs[this.props.activeDoc];
+        } else {
+            selectedLabel = this.props.predictions[this.props.activeDoc]
+                .label;
+        }
+
+        return selectedLabel;
+    }
+
+    /**
+     * Render the Visualiser component.
+     * 
+     * @returns {React.Component} - Visualiser Component
+     */
+    render() {
+        return &lt;Visualiser 
+            ref={this.ref} />;
+    }
+}
+
+// React PropTypes object
+VisualiserContainer.propTypes = {
+    labelledDocs: PropTypes.object,
+    predictions: PropTypes.object,
+    labels: PropTypes.array,
+    activeDoc: PropTypes.string
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AppContainer.html">AppContainer</a></li><li><a href="DocListContainer.html">DocListContainer</a></li><li><a href="LabelBarChart.html">LabelBarChart</a></li><li><a href="LabelModalContainer.html">LabelModalContainer</a></li><li><a href="ProbHistogram.html">ProbHistogram</a></li><li><a href="SuggestionsContainer.html">SuggestionsContainer</a></li><li><a href="VisualiserContainer.html">VisualiserContainer</a></li></ul><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#Body">Body</a></li><li><a href="global.html#DocButton">DocButton</a></li><li><a href="global.html#DocList">DocList</a></li><li><a href="global.html#LabelModal">LabelModal</a></li><li><a href="global.html#Navbar">Navbar</a></li><li><a href="global.html#Suggestions">Suggestions</a></li><li><a href="global.html#TextReader">TextReader</a></li><li><a href="global.html#Visualiser">Visualiser</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.4</a> on Thu Apr 30 2020 18:41:17 GMT+0100 (British Summer Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

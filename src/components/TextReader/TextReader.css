@@ -1,0 +1,6 @@
+.text-reader {
+    height: 95vh;
+    overflow-y: auto;
+    border-left: solid 1px black;
+    padding-left: 1em;
+}

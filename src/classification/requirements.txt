@@ -1,0 +1,4 @@
+sklearn
+flask
+flask-cors
+python-dotenv
