@@ -4,6 +4,10 @@ services:
   backend:
     container_name: doc-view-extended-backend
     image: doc-view-extended-backend:latest
+    environment: 
+      - DOC_DIRECTORY=./data/research_papers/
+      - LABELS_FILE=./data/labels.json
+      - PREDS_FILE=./data/predictions.json
     build: ./src/classification
   
   frontend:

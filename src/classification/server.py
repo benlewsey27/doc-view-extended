@@ -14,8 +14,15 @@ import logistic_regression_classification as classification
 app = Flask(__name__)
 
 FILE_ENCODING = 'utf-8'
-LABELS_FILE = './data/labels.json'
-PREDS_FILE = './data/predictions.json'
+
+if 'LABELS_FILE' not in os.environ:
+    print("WARNING: LABELS_FILE not found in environment variables!")
+
+if 'PREDS_FILE' not in os.environ:
+    print("WARNING: PREDS_FILE not found in environment variables!")
+
+LABELS_FILE = os.environ.get('LABELS_FILE')
+PREDS_FILE = os.environ.get('PREDS_FILE')
 
 @app.route('/api/get_data')
 def get_data():
