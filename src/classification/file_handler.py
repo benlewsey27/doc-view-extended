@@ -6,8 +6,11 @@ Edit this module if your directory structure has changed.
 
 import os
 
+if 'DOC_DIRECTORY' not in os.environ:
+    print("WARNING: DOC_DIRECTORY not found in environment variables!")
+
 # The directory of documents to classify
-DOC_DIRECTORY = './data/research_papers/'
+DOC_DIRECTORY = os.environ.get('DOC_DIRECTORY')
 
 def load_files():
     """
