@@ -11,11 +11,34 @@ This tool is meant for researchers to test different methods of text-classificat
 
 These instructions assume you have either downloaded or cloned the source code from its available repository.
 
-### Adding a dataset
+### Environment Variables
 
-For the application to run correctly, a document dataset needs to be added. Navigate to the `classification` directory and create a new `data` folder. Within this folder, add your documents (these should be .txt files).
+Environment Variables are used to set the data directory and label file paths in the docker-compose configuration. Defaults are stable, but change if required.
 
-Open `file_handler.py` for editing and change the `DOC_DIRECTORY` variable to be the root directory of your new dataset. You may wish to have several document directories within `data`, to then pick and choose the one you want to use by changing this variable. 
+```
+environment: 
+    - DOC_DIRECTORY=./data/research_papers/
+    - LABELS_FILE=./data/labels.json
+    - PREDS_FILE=./data/predictions.json
+```
+
+Note: If using relative filepaths, the code reads the path from the src/classification directory. For example, if the document directory is `src/classification/data/research_papers/`, the relative filepath would be `./data/research_papers/`.
+
+**Data Directory**
+
+For the application to run correctly, a document dataset needs to be added. 
+
+1. Create a directory to store the documents (e.g. classification/data/research_papers/).
+2. Store the documents (.txt files) in the directory created in step 1.
+2. Set the directory path using an environment variable called `DOC_DIRECTORY`.
+
+**Label File Paths**
+
+The backend will store the current label state in json files, one for labels and one for predictions.
+
+1. Ensure the directory structure exists for each filepath.
+2. Set the label file path in `LABELS_FILE`.
+3. Set the prediction file path in `PREDS_FILE`.
 
 ## Running the application
 
