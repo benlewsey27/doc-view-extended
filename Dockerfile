@@ -6,7 +6,7 @@ RUN yarn
 COPY . .
 RUN yarn build
 
-FROM nginx:alpine
+FROM nginx:1.19-alpine
 COPY --from=builder /app/build/ /usr/share/nginx/html
 RUN rm -rf /etc/nginx/conf.d/default.conf
 COPY ./src/nginx.conf /etc/nginx/conf.d
