@@ -2,8 +2,8 @@ version: '3'
 
 services:
   backend:
-    container_name: doc-view-extended-backend
-    image: doc-view-extended-backend:latest
+    container_name: docview-extended-backend
+    image: docview-extended-backend:latest
     environment: 
       - DOC_DIRECTORY=/opt/data/research_papers/
       - LABELS_FILE=/opt/data/labels.json
@@ -13,8 +13,8 @@ services:
       - ./src/classification/data:/opt/data
   
   frontend:
-    container_name: doc-view-extended-frontend
-    image: doc-view-extended-frontend:latest
+    container_name: docview-extended-frontend
+    image: docview-extended-frontend:latest
     build: .
     ports: 
       - 8000:80
