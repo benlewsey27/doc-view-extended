@@ -80,7 +80,7 @@ export class VisualiserContainer extends React.Component {
                             {this.state.isReady && <ProbHistogram id='3' width={this.getWidth(4)} height={this.getHeight(2)} data={this.state.data}/>}
                         </div>
                         <div className='row'>
-                            {this.state.isReady && <ProbHistogram id='4' width={this.getWidth(2)} height={this.getHeight(2)} data={this.state.data}/>}
+                            {this.state.isReady && <LabelBarChart id='4' width={this.getWidth(2)} height={this.getHeight(2)} data={this.state.data}/>}
                         </div>
                         </div>
                     </div>
