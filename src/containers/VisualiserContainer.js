@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import ProbHistogram from '../visualisations/ProbHistogram';
 import LabelBarChart from '../visualisations/LabelBarChart';
+import PieChart from '../visualisations/PieChart';
 
 export class VisualiserContainer extends React.Component {
     constructor(props){
@@ -75,7 +76,7 @@ export class VisualiserContainer extends React.Component {
                     <div className='row'>
                         <div className='container-fluid'>
                         <div className='row'>
-                            {this.state.isReady && <ProbHistogram id='2' width={this.getWidth(4)} height={this.getHeight(2)} data={this.state.data}/>}
+                            {this.state.isReady && <PieChart id='2' width={this.getWidth(4)} height={this.getHeight(2)} data={this.state.data}/>}
                             {this.state.isReady && <ProbHistogram id='3' width={this.getWidth(4)} height={this.getHeight(2)} data={this.state.data}/>}
                         </div>
                         <div className='row'>
