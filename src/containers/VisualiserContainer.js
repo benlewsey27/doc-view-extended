@@ -1,126 +1,84 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Visualiser } from '../components/Visualiser/Visualiser';
-//import { LabelBarChart as Visualisation } from '../visualisation/LabelBarChart';
-import { ProbHistogram as Visualisation } from '../visualisation/ProbHistogram';
+import ProbHistogram from '../visualisations/ProbHistogram';
+import LabelBarChart from '../visualisations/LabelBarChart';
 
-const VISUALISER_ID = "visualiser";
-
-
-/**
- * React container component used to handle Visualiser operations.
- * Renders the Visualiser component and calls d3 graph operations.
- */
 export class VisualiserContainer extends React.Component {
-    /**
-     * Set the initial state.
-     * 
-     * @param {Object} props - The React props passed down from the parent
-     * component
-     * @constructor
-     */
-    constructor(props) {
+    constructor(props){
         super(props);
-        this.state = {
-            svg: null
-        }
-
-        // Use ref to access rendered DOM node for width and height
-        this.ref = React.createRef();
+        this.state={
+            isReady: false,
+            data: {},
+        };
     }
 
-    /**
-     * React callback function. Create chart when component mounts.
-     */
-    componentDidMount() {
-        // Get DOM node width and height
-        let width = this.ref.current.offsetWidth;
-        let height = this.ref.current.offsetHeight;
+    componentDidMount(){
+        setTimeout(() => { this.setState({isReady: true}) }, 10);
 
-        if (this.props.labels !== undefined
-                && this.props.labels.length !== 0) {
-            // Target appropriate data for visualisation object.
+        if (this.props.labels && this.props.labels.length) {
+            // Change Predictions Into Array Of Objects
+            const newPredictions = [];
+            for (const [key, value] of Object.entries(this.props.predictions)) {
+                const newObject = {
+                    'filename': key,
+                    ...value
+                }
+                newPredictions.push(newObject);
+            }
+
+            // Change LabelledDocs Into Array Of Objects
+            const newLabelledDocs = [];
+            for (const [key, value] of Object.entries(this.props.labelledDocs)) {
+                const newObject = {
+                    'filename': key,
+                    'label': value
+                }
+                newLabelledDocs.push(newObject);
+            }
+
             let data = {
-                labelledDocs: this.props.labelledDocs,
-                predictions: this.props.predictions,
+                labelledDocs: newLabelledDocs,
+                predictions: newPredictions,
                 labels: this.props.labels,
                 selectedLabel: this.getSelectedLabel()
             }
-
-            // Create chart
-            let svg = new Visualisation(VISUALISER_ID, width, height, data);
-            this.setState({svg: svg});
+            
+            this.setState({data: data});
         }
     }
 
-    /**
-     * React callback function. Update chart on every component update.
-     */
-    componentDidUpdate() {
-        // Get updated DOM node width and height
-        let width = this.ref.current.offsetWidth;
-        let height = this.ref.current.offsetHeight;
-        
-        if (this.props.labels !== undefined 
-                && this.props.labels.length !== 0) {
-            // Target appropriate data for visualisation object
-            let data = {
-                labelledDocs: this.props.labelledDocs,
-                predictions: this.props.predictions,
-                labels: this.props.labels,
-                selectedLabel: this.getSelectedLabel()
-            }
-
-            // Update chart
-            this.state.svg.updateChart(width, height, data);
-        }
+    getWidth(cols) {
+        const docListPanel = document.getElementById('doc-list');
+        return ((Math.max(document.documentElement.clientWidth, window.innerWidth || 0) - docListPanel.offsetWidth) / cols) - 50;
     }
 
-    /**
-     * React callback function. Remove DOM element when component unmounts
-     * to avoid any issues.
-     */
-    componentWillUnmount() {
-        // Remove graph from DOM
-        let element = document.getElementById(VISUALISER_ID);
-        while (element.firstChild) {
-            element.removeChild(element.firstChild);
-        }
+    getHeight(rows) {
+        const navPanel = document.getElementById('nav-panel');
+        const suggestionsPanel = document.getElementById('suggestions');
+        return ((Math.max(document.documentElement.clientHeight, window.innerHeight || 0) - navPanel.offsetHeight - suggestionsPanel.offsetHeight) / rows) - 20;
     }
 
-
-    /**
-     * Get the label for the currently active doc (used in LabelBarChart for
-     * example).
-     * 
-     * @returns {String} - The active document's label
-     */
     getSelectedLabel() {
-        // Get label for selected doc
-        let selectedLabel = '';
         if (this.props.activeDoc in this.props.labelledDocs) {
-            selectedLabel = this.props.labelledDocs[this.props.activeDoc];
-        } else {
-            selectedLabel = this.props.predictions[this.props.activeDoc]
-                .label;
+            return this.props.labelledDocs[this.props.activeDoc];
         }
 
-        return selectedLabel;
+        return this.props.predictions[this.props.activeDoc].label;
     }
 
-    /**
-     * Render the Visualiser component.
-     * 
-     * @returns {React.Component} - Visualiser Component
-     */
     render() {
-        return <Visualiser 
-            ref={this.ref} />;
+        return (
+            <div className="container-fluid">
+                <div className="row">
+                    {this.state.isReady && <ProbHistogram id="1" width={this.getWidth(2)} height={this.getHeight(1)} data={this.state.data}/>}
+                    {this.state.isReady && <LabelBarChart id="2" width={this.getWidth(2)} height={this.getHeight(1)} data={this.state.data}/>}
+                </div>
+            </div>
+        )
     }
 }
 
-// React PropTypes object
 VisualiserContainer.propTypes = {
     labelledDocs: PropTypes.object,
     predictions: PropTypes.object,
