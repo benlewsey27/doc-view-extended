@@ -24,6 +24,10 @@ if 'PREDS_FILE' not in os.environ:
 LABELS_FILE = os.environ.get('LABELS_FILE')
 PREDS_FILE = os.environ.get('PREDS_FILE')
 
+@app.route('/api/health')
+def health():
+    return 'Hello, World', 200
+
 @app.route('/api/get_data')
 def get_data():
     """
