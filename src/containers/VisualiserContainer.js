@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import ProbHistogram from '../visualisations/ProbHistogram';
 import LabelBarChart from '../visualisations/LabelBarChart';
+import PieChart from '../visualisations/PieChart';
 
 export class VisualiserContainer extends React.Component {
     constructor(props){
@@ -50,7 +51,7 @@ export class VisualiserContainer extends React.Component {
 
     getWidth(cols) {
         const docListPanel = document.getElementById('doc-list');
-        return ((Math.max(document.documentElement.clientWidth, window.innerWidth || 0) - docListPanel.offsetWidth) / cols) - 50;
+        return ((Math.max(document.documentElement.clientWidth, window.innerWidth || 0) - docListPanel.offsetWidth) / cols) - 30;
     }
 
     getHeight(rows) {
@@ -66,13 +67,23 @@ export class VisualiserContainer extends React.Component {
 
         return this.props.predictions[this.props.activeDoc].label;
     }
-
+    
     render() {
         return (
-            <div className="container-fluid">
-                <div className="row">
-                    {this.state.isReady && <ProbHistogram id="1" width={this.getWidth(2)} height={this.getHeight(1)} data={this.state.data}/>}
-                    {this.state.isReady && <LabelBarChart id="2" width={this.getWidth(2)} height={this.getHeight(1)} data={this.state.data}/>}
+            <div className='container-fluid'>
+                <div className='row'>
+                    {this.state.isReady && <ProbHistogram id='1' width={this.getWidth(2)} height={this.getHeight(1)} data={this.state.data}/>}
+                    <div className='row'>
+                        <div className='container-fluid'>
+                        <div className='row'>
+                            {this.state.isReady && <PieChart id='2' width={this.getWidth(4)} height={this.getHeight(2)} data={this.state.data}/>}
+                            {this.state.isReady && <ProbHistogram id='3' width={this.getWidth(4)} height={this.getHeight(2)} data={this.state.data}/>}
+                        </div>
+                        <div className='row'>
+                            {this.state.isReady && <LabelBarChart id='4' width={this.getWidth(2)} height={this.getHeight(2)} data={this.state.data}/>}
+                        </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         )
