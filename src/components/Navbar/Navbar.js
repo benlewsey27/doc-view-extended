@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
  */
 export const Navbar = (props) => {
     return (
-        <nav className="nav navbar-expand navbar-light bg-light">
+        <nav className="nav navbar-expand navbar-light bg-light" id="nav-panel">
             <ul className="navbar-nav">
                 <li className="nav-item dropdown">
                     <a 

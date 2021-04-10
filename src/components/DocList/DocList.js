@@ -10,7 +10,7 @@ import './DocList.css';
  */
 export const DocList = (props) => {
     return (
-        <div className="doc-list">
+        <div className="doc-list" id="doc-list">
             <input 
                 className="form-control" 
                 type="text" 

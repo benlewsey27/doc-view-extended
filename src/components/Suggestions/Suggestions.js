@@ -11,7 +11,7 @@ import './Suggestions.css';
  */
 export const Suggestions = (props) => {
     return (
-        <div className="suggestions">
+        <div className="suggestions" id="suggestions">
             <h2 className="pl-3">Suggested Documents:</h2>
             <div className="list-group">
                 {props.suggestedDocs}
