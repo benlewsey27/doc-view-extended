@@ -24,9 +24,6 @@ const TreeMap = (props) => {
       });
     }
 
-    console.log(`Total Docs: ${allLabels.length}`);
-    console.log(data);
-    
     draw(props, data);
   }, [props]);
 

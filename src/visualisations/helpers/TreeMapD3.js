@@ -1,5 +1,8 @@
 import * as d3 from 'd3';
 
+let activeNode = null;
+let setActiveLabel = null;
+
 function wordWrapper(selection) {
   selection.each(function(d) {
     const node = d3.select(this);
@@ -25,9 +28,28 @@ function wordWrapper(selection) {
   })
 }
 
+function changeColor(d, i) {
+  const node = d3.select(this);
+
+  if (activeNode) {
+    activeNode.style('fill', 'white');
+
+    if (activeNode.attr('id') === node.attr('id')) {
+      setActiveLabel(null);
+      return;
+    }
+  } 
+
+  activeNode = node;
+  activeNode.style('fill', 'lightgrey');
+  setActiveLabel(activeNode.attr('id'));
+}
+
 export const draw = async (props, data) => {
   const div_class = `.div_${props.id}`;
   const svg_id = `svg_${props.id}`;
+
+  setActiveLabel = props.setActiveLabel;
 
   const margin = {top: 10, right: 40, bottom: 0, left: 10};
   const width = Number(props.width);
@@ -55,18 +77,18 @@ export const draw = async (props, data) => {
     .padding(5)
     (root)
 
-  console.log(root.leaves());
-
   svg.selectAll("rect")
     .data(root.leaves())
     .enter()
     .append("rect")
       .attr('x', d => d.x0)
       .attr('y', d => d.y0)
+      .attr('id', d => d.data.label)
       .attr('width', d => d.x1 - d.x0)
       .attr('height', d => d.y1 - d.y0)
       .style("stroke", "black")
-      .style("fill", "white");
+      .style("fill", d => d.data.label === props.activeLabel ? 'lightgrey' : 'white')
+      .on('click', changeColor);
   
   svg.selectAll("text")
     .data(root.leaves())
