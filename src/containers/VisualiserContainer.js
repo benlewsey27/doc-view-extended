@@ -4,12 +4,14 @@ import PropTypes from 'prop-types';
 import ProbHistogram from '../visualisations/ProbHistogram';
 import LabelBarChart from '../visualisations/LabelBarChart';
 import PieChart from '../visualisations/PieChart';
+import TreeMap from '../visualisations/TreeMap';
 
 export class VisualiserContainer extends React.Component {
     constructor(props){
         super(props);
         this.state={
             isReady: false,
+            activeLabel: null,
             data: {},
         };
     }
@@ -67,12 +69,16 @@ export class VisualiserContainer extends React.Component {
 
         return this.props.predictions[this.props.activeDoc].label;
     }
+
+    setActiveLabel(label) {
+        this.setState({activeLabel: label});
+    }
     
     render() {
         return (
             <div className='container-fluid'>
                 <div className='row'>
-                    {this.state.isReady && <ProbHistogram id='1' width={this.getWidth(2)} height={this.getHeight(1)} data={this.state.data}/>}
+                    {this.state.isReady && <TreeMap id='1' width={this.getWidth(2)} height={this.getHeight(1)} data={this.state.data} setActiveLabel={this.setActiveLabel.bind(this)} activeLabel={this.state.activeLabel}/>}
                     <div className='row'>
                         <div className='container-fluid'>
                         <div className='row'>
