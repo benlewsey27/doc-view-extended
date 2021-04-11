@@ -35,16 +35,18 @@ const LabelBarChart = (props) => {
     }
 
     const data = []
-    for (let i = 0; i < labels.length; i++) {
-      const label = labels[i];
-      const labelledCount = userLabelsCount[i].count;
-      const unlabelledCount = predictedLabelsCount[i].count;
-
-      data.push({
-        label,
-        labelled: labelledCount,
-        unlabelled: unlabelledCount,
-      })
+    if (labels) {
+      for (let i = 0; i < labels.length; i++) {
+        const label = labels[i];
+        const labelledCount = userLabelsCount[i].count;
+        const unlabelledCount = predictedLabelsCount[i].count;
+  
+        data.push({
+          label,
+          labelled: labelledCount,
+          unlabelled: unlabelledCount,
+        })
+      }
     }
 
     let maxCount = 0;
