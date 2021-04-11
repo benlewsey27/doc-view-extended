@@ -16,19 +16,18 @@ export const draw = async (props, data, maxCount) => {
       .attr('width', width + margin.right)
       .attr('id', svg_id)
   
-  var x = d3.scaleBand()
+  const x = d3.scaleBand()
     .domain(data.map(d => d.label))
     .range([margin.left, width - margin.right])
     .padding([0.5])
   
-  var y = d3.scaleLinear()
+  const y = d3.scaleLinear()
     .domain([0, maxCount + 20])
     .range([height - margin.bottom, margin.top]);
 
   const xAxis = g => g
     .attr("transform", `translate(0, ${height - margin.bottom})`)
-    .call(d3.axisBottom(x)
-      .tickSizeOuter(0));
+    .call(d3.axisBottom(x).tickSizeOuter(0));
   
   const yAxis = g => g
     .attr("transform", `translate(${margin.left}, 0)`)
