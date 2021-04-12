@@ -23,19 +23,18 @@ export const draw = async (props, data) => {
     .outerRadius(width / 6);
 
   const pieGenerator = d3.pie()
-    .value(d => d.count);
+    .value(d => d.count)
+    .sort(null)
 
-  const arc = svg.selectAll()
+  const colors = ['steelblue', 'lightgrey']
+
+  svg.selectAll('path')
     .data(pieGenerator(data))
-    .enter();
+    .enter()
+      .append('path')
+        .attr('fill', (d, i) => colors[i])
+        .attr('d', arcGenerator)
 
-  const colors = ["steelblue", "lightgrey"]
-  
-  arc.append('path')
-    .attr('d', arcGenerator)
-    .style('fill', (d, i) => colors[i])
-
-  // Add Title
   svg.append('text')
     .attr('x', 0)
     .attr('y', -height/3)
@@ -44,7 +43,6 @@ export const draw = async (props, data) => {
     .attr('font-weight', 'bold')
     .text('Number Of Labelled vs. Unlabelled Documents');
 
-  // Add Bottom
   svg.append('text')
     .attr('x', 0)
     .attr('y', height/2)
