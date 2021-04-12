@@ -39,7 +39,7 @@ export const draw = async (props, data, maxCount) => {
   svg.append("g").call(yAxis);
 
   const color = d3.scaleLinear()
-    .range(["white", "#69b3a2"])
+    .range(["white", "steelblue"])
     .domain([0, maxCount])
 
   svg.selectAll()
