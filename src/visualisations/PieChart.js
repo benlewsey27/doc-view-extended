@@ -3,8 +3,8 @@ import { draw } from './helpers/PieChartD3.js';
 
 const PieChart = (props) => {  
   useEffect(() => {
-    const labelledDocs = props.data.labelledDocs;
-    const predictions = props.data.predictions;
+    const labelledDocs = props.data.labelledDocs.filter(dp => props.filter ? dp.label === props.filter : true);
+    const predictions = props.data.predictions.filter(dp => props.filter ? dp.label === props.filter : true);
 
     const data = [
       {

@@ -77,20 +77,20 @@ export class VisualiserContainer extends React.Component {
     render() {
         return (
             <div className='container-fluid'>
-                <div className='row'>
-                    {this.state.isReady && <TreeMap id='1' width={this.getWidth(2)} height={this.getHeight(1)} data={this.state.data} setActiveLabel={this.setActiveLabel.bind(this)} activeLabel={this.state.activeLabel}/>}
+                {this.state.isReady && <div className='row'>
+                    <TreeMap id='1' width={this.getWidth(2)} height={this.getHeight(1)} data={this.state.data} setActiveLabel={this.setActiveLabel.bind(this)} activeLabel={this.state.activeLabel}/>
                     <div className='row'>
                         <div className='container-fluid'>
                         <div className='row'>
-                            {this.state.isReady && <PieChart id='2' width={this.getWidth(4)} height={this.getHeight(2)} data={this.state.data}/>}
-                            {this.state.isReady && <HistoryChart id='3' width={this.getWidth(4)} height={this.getHeight(2)} data={this.state.data}/>}
+                            <PieChart id='2' width={this.getWidth(4)} height={this.getHeight(2)} data={this.state.data} filter={this.state.activeLabel}/>
+                            <HistoryChart id='3' width={this.getWidth(4)} height={this.getHeight(2)} data={this.state.data}/>
                         </div>
                         <div className='row'>
-                            {this.state.isReady && <LabelBarChart id='4' width={this.getWidth(2)} height={this.getHeight(2)} data={this.state.data}/>}
+                            <LabelBarChart id='4' width={this.getWidth(2)} height={this.getHeight(2)} data={this.state.data}/>
                         </div>
                         </div>
                     </div>
-                </div>
+                </div>}
             </div>
         )
     }
