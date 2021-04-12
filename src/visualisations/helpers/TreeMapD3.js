@@ -20,7 +20,7 @@ function wordWrapper(selection) {
 
     const wordWidth = tspan.node().getComputedTextLength();
 
-    if (wordWidth > rectWidth) {
+    if (wordWidth > rectWidth - 1) {
       tspan.attr('y', -(x0 + 5))
       tspan.attr('x', y0 + 5)
       node.attr('transform', 'rotate(90)')
