@@ -35,7 +35,7 @@ export class VisualiserContainer extends React.Component {
             for (const [key, value] of Object.entries(this.props.labelledDocs)) {
                 const newObject = {
                     'filename': key,
-                    'label': value
+                    ...value
                 }
                 newLabelledDocs.push(newObject);
             }
@@ -64,7 +64,7 @@ export class VisualiserContainer extends React.Component {
 
     getSelectedLabel() {
         if (this.props.activeDoc in this.props.labelledDocs) {
-            return this.props.labelledDocs[this.props.activeDoc];
+            return this.props.labelledDocs[this.props.activeDoc].label;
         }
 
         return this.props.predictions[this.props.activeDoc].label;

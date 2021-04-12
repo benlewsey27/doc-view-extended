@@ -104,8 +104,8 @@ export class AppContainer extends React.Component {
                 let labelledDocValues = Object.values(data.labelledDocs);
                 let labels = [];
                 for (let i = 0; i < labelledDocValues.length; i++) {
-                    if (!labels.includes(labelledDocValues[i])) {
-                        labels.push(labelledDocValues[i]);
+                    if (!labels.includes(labelledDocValues[i].label)) {
+                        labels.push(labelledDocValues[i].label);
                     }
                 }
 

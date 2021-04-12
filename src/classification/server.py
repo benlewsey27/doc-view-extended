@@ -98,10 +98,10 @@ def add_labels():
 
     labelled_files = []
     labels = []
-    for file, label in new_labels.items():
+    for file, data in new_labels.items():
         # Add file and label to respective lists
         labelled_files.append(file_handler.DOC_DIRECTORY + file)
-        labels.append(label)
+        labels.append(data['label'])
         # Remove file from files to predict
         files.remove(file)
 
