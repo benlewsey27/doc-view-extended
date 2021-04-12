@@ -4,7 +4,7 @@ export const draw = async (props, data, maxCount) => {
   const div_class = `.div_${props.id}`;
   const svg_id = `svg_${props.id}`;
 
-  const margin = {top: 30, right: 0, bottom: 0, left: 40};
+  const margin = {top: 20, right: 0, bottom: 0, left: 40};
   const width = Number(props.width);
   const height = Number(props.height);
 
@@ -60,7 +60,7 @@ export const draw = async (props, data, maxCount) => {
   
   svg.append('text')
     .attr('x', width/2)
-    .attr('y', 50)
+    .attr('y', 30)
     .attr('text-anchor', 'middle')
     .attr('font-size', '12px')
     .attr('font-weight', 'bold')
