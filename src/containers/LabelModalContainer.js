@@ -118,7 +118,7 @@ export class LabelModalContainer extends React.Component {
         } else {
             label = document.getElementById("labelSelect").value;
         }
-        this.props.labelledDocs[this.state.currentDoc] = label;
+        this.props.labelledDocs[this.state.currentDoc] = { label, timestamp: new Date() };
 
         this.setState({
             isNewLabel: true,

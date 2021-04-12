@@ -71,7 +71,7 @@ export class DocListContainer extends React.Component {
                 let docLabel = '';
                 if (filename in this.props.labelledDocs) {
                     userLabelled = true;
-                    docLabel = this.props.labelledDocs[filename];
+                    docLabel = this.props.labelledDocs[filename].label;
                 } else if (filename in this.props.predictions) {
                     docLabel = this.props.predictions[filename].label;
                 }

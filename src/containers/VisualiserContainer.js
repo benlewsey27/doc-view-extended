@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import ProbHistogram from '../visualisations/ProbHistogram';
+import HistoryChart from '../visualisations/HistoryChart';
 import LabelBarChart from '../visualisations/LabelBarChart';
 import PieChart from '../visualisations/PieChart';
 import TreeMap from '../visualisations/TreeMap';
@@ -35,7 +35,7 @@ export class VisualiserContainer extends React.Component {
             for (const [key, value] of Object.entries(this.props.labelledDocs)) {
                 const newObject = {
                     'filename': key,
-                    'label': value
+                    ...value
                 }
                 newLabelledDocs.push(newObject);
             }
@@ -64,7 +64,7 @@ export class VisualiserContainer extends React.Component {
 
     getSelectedLabel() {
         if (this.props.activeDoc in this.props.labelledDocs) {
-            return this.props.labelledDocs[this.props.activeDoc];
+            return this.props.labelledDocs[this.props.activeDoc].label;
         }
 
         return this.props.predictions[this.props.activeDoc].label;
@@ -83,7 +83,7 @@ export class VisualiserContainer extends React.Component {
                         <div className='container-fluid'>
                         <div className='row'>
                             {this.state.isReady && <PieChart id='2' width={this.getWidth(4)} height={this.getHeight(2)} data={this.state.data}/>}
-                            {this.state.isReady && <ProbHistogram id='3' width={this.getWidth(4)} height={this.getHeight(2)} data={this.state.data}/>}
+                            {this.state.isReady && <HistoryChart id='3' width={this.getWidth(4)} height={this.getHeight(2)} data={this.state.data}/>}
                         </div>
                         <div className='row'>
                             {this.state.isReady && <LabelBarChart id='4' width={this.getWidth(2)} height={this.getHeight(2)} data={this.state.data}/>}

@@ -4,7 +4,7 @@ export const draw = async (props, data, maxCount) => {
   const div_class = `.div_${props.id}`;
   const svg_id = `svg_${props.id}`;
 
-  const margin = {top: 30, right: 0, bottom: 0, left: 40};
+  const margin = {top: 20, right: 0, bottom: 0, left: 40};
   const width = Number(props.width);
   const height = Number(props.height);
 
@@ -16,19 +16,18 @@ export const draw = async (props, data, maxCount) => {
       .attr('width', width + margin.right)
       .attr('id', svg_id)
   
-  var x = d3.scaleBand()
+  const x = d3.scaleBand()
     .domain(data.map(d => d.label))
     .range([margin.left, width - margin.right])
     .padding([0.5])
   
-  var y = d3.scaleLinear()
+  const y = d3.scaleLinear()
     .domain([0, maxCount + 20])
     .range([height - margin.bottom, margin.top]);
 
   const xAxis = g => g
     .attr("transform", `translate(0, ${height - margin.bottom})`)
-    .call(d3.axisBottom(x)
-      .tickSizeOuter(0));
+    .call(d3.axisBottom(x).tickSizeOuter(0));
   
   const yAxis = g => g
     .attr("transform", `translate(${margin.left}, 0)`)
@@ -61,7 +60,7 @@ export const draw = async (props, data, maxCount) => {
   
   svg.append('text')
     .attr('x', width/2)
-    .attr('y', 50)
+    .attr('y', 30)
     .attr('text-anchor', 'middle')
     .attr('font-size', '12px')
     .attr('font-weight', 'bold')
