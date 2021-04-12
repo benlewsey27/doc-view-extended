@@ -5,6 +5,7 @@ import HistoryChart from '../visualisations/HistoryChart';
 import LabelBarChart from '../visualisations/LabelBarChart';
 import PieChart from '../visualisations/PieChart';
 import TreeMap from '../visualisations/TreeMap';
+import ArcChart from '../visualisations/ArcChart';
 
 export class VisualiserContainer extends React.Component {
     constructor(props){
@@ -83,7 +84,10 @@ export class VisualiserContainer extends React.Component {
                         <div className='container-fluid'>
                         <div className='row'>
                             <PieChart id='2' width={this.getWidth(4)} height={this.getHeight(2)} data={this.state.data} filter={this.state.activeLabel}/>
-                            <HistoryChart id='3' width={this.getWidth(4)} height={this.getHeight(2)} data={this.state.data}/>
+                            {!this.state.activeLabel
+                                ? <HistoryChart id='3' width={this.getWidth(4)} height={this.getHeight(2)} data={this.state.data}/>
+                                : <ArcChart id='3' width={this.getWidth(4)} height={this.getHeight(2)} data={this.state.data} filter={this.state.activeLabel}/>
+                            }
                         </div>
                         <div className='row'>
                             <LabelBarChart id='4' width={this.getWidth(2)} height={this.getHeight(2)} data={this.state.data}/>
