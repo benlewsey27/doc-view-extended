@@ -1,51 +1,51 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+
 import { Navbar } from './components/Navbar/Navbar';
 import { Body } from './components/Body/Body';
 import { LabelModalContainer } from './containers/LabelModalContainer';
 
-
 /**
  * React Stateless Functional Component. Renders the application's main
  * components: Navbar, Body and LabelModal.
- * 
- * @param {Object} props - The React props passed down from the parent 
+ *
+ * @param {Object} props - The React props passed down from the parent
  * component
  */
-export const App = (props) => {
-  return (
-    <div>
-      <Navbar
-        onShowTextClick={props.onShowTextClick}
-        onLabelUncertainClick={props.onLabelUncertainClick}
-        showText={props.showText}
-        onLabelSelectedClick={props.onLabelSelectedClick}
-        onResetData={props.onResetData} />
-      <Body
-        docs={props.docs}
-        activeDoc={props.activeDoc}
-        onDocChange={props.onDocChange}
-        showText={props.showText} 
-        loading={props.loading}
-        labelledDocs={props.labelledDocs}
-        predictions={props.predictions}
-        docsToLabel={props.docsToLabel}
-        onLabelSelectedClick={props.onLabelSelectedClick}
-        labels={props.labels} />
-      <LabelModalContainer
-        docs={props.docs}
-        activeDoc={props.repeatModal ? null : props.activeDoc}
-        showModal={props.showModal}
-        onHideModal={props.onHideModal}
-        loading={props.loading} 
-        onSendLabels={props.onSendLabels}
-        labelledDocs={props.labelledDocs}
-        docsToLabel={props.docsToLabel}
-        labels={props.labels}
-        repeatModal={props.repeatModal} />
-    </div>
-  );
-}
+export const App = (props) => (
+  <div>
+    <Navbar
+      onShowTextClick={props.onShowTextClick}
+      onLabelUncertainClick={props.onLabelUncertainClick}
+      showText={props.showText}
+      onLabelSelectedClick={props.onLabelSelectedClick}
+      onResetData={props.onResetData}
+    />
+    <Body
+      docs={props.docs}
+      activeDoc={props.activeDoc}
+      onDocChange={props.onDocChange}
+      showText={props.showText}
+      loading={props.loading}
+      labelledDocs={props.labelledDocs}
+      predictions={props.predictions}
+      docsToLabel={props.docsToLabel}
+      onLabelSelectedClick={props.onLabelSelectedClick}
+      labels={props.labels}
+    />
+    <LabelModalContainer
+      docs={props.docs}
+      activeDoc={props.repeatModal ? null : props.activeDoc}
+      showModal={props.showModal}
+      onHideModal={props.onHideModal}
+      loading={props.loading}
+      onSendLabels={props.onSendLabels}
+      labelledDocs={props.labelledDocs}
+      docsToLabel={props.docsToLabel}
+      labels={props.labels}
+      repeatModal={props.repeatModal}
+    />
+  </div>
+);
 
 // React PropTypes object
 App.propTypes = {
@@ -65,5 +65,5 @@ App.propTypes = {
   onLabelSelectedClick: PropTypes.func.isRequired,
   labels: PropTypes.array,
   repeatModal: PropTypes.bool.isRequired,
-  onResetData: PropTypes.func.isRequired
-}
+  onResetData: PropTypes.func.isRequired,
+};

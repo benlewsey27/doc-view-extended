@@ -1,20 +1,23 @@
 import { useEffect } from 'react';
-import { draw } from './helpers/BarChartD3.js';
+import { draw } from './helpers/BarChartD3';
 
-const BarChart = (props) => {  
+const BarChart = (props) => {
   useEffect(() => {
-    const labelledDocs = props.data.labelledDocs;
-    const predictions = props.data.predictions;
-    const labels = props.data.labels;
+    const { labelledDocs, predictions, labels } = props.data;
 
-    const userLabels = labelledDocs ? labelledDocs.map(dp => dp.label) : [];
-    const predictedLabels = predictions ? predictions.map(dp => dp.label) : [];
+    const userLabels = labelledDocs ? labelledDocs.map((dp) => dp.label) : [];
+    const predictedLabels = predictions
+      ? predictions.map((dp) => dp.label)
+      : [];
 
     const userLabelsCount = [];
     if (labels) {
       labels.forEach((label) => {
-        const count = userLabels.reduce((n, currentLabel) => n + (currentLabel === label), 0);
-  
+        const count = userLabels.reduce(
+          (n, currentLabel) => n + (currentLabel === label),
+          0,
+        );
+
         userLabelsCount.push({
           label,
           count,
@@ -25,8 +28,11 @@ const BarChart = (props) => {
     const predictedLabelsCount = [];
     if (labels) {
       labels.forEach((label) => {
-        const count = predictedLabels.reduce((n, currentLabel) => n + (currentLabel === label), 0);
-  
+        const count = predictedLabels.reduce(
+          (n, currentLabel) => n + (currentLabel === label),
+          0,
+        );
+
         predictedLabelsCount.push({
           label,
           count,
@@ -34,31 +40,31 @@ const BarChart = (props) => {
       });
     }
 
-    const data = []
+    const data = [];
     if (labels) {
-      for (let i = 0; i < labels.length; i++) {
+      for (let i = 0; i < labels.length; i += 1) {
         const label = labels[i];
         const labelledCount = userLabelsCount[i].count;
         const unlabelledCount = predictedLabelsCount[i].count;
-  
+
         data.push({
           label,
           labelled: labelledCount,
           unlabelled: unlabelledCount,
-        })
+        });
       }
     }
 
     let maxCount = 0;
-    data.forEach(label => {
+    data.forEach((label) => {
       if (label.labelled > maxCount) {
-        maxCount = label.labelled
+        maxCount = label.labelled;
       }
 
-      if (label.unlabelled > maxCount ) {
-        maxCount = label.unlabelled
+      if (label.unlabelled > maxCount) {
+        maxCount = label.unlabelled;
       }
-    })
+    });
 
     data.sort((a, b) => {
       const aTotal = a.labelled + a.unlabelled;
@@ -72,9 +78,7 @@ const BarChart = (props) => {
     draw(props, data, maxCount);
   }, [props]);
 
-  return (
-    <div className={`div_${props.id}`}/>
-  )
-}
+  return <div className={`div_${props.id}`} />;
+};
 
 export default BarChart;
