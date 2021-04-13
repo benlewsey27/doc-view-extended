@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import HistoryChart from '../visualisations/HistoryChart';
-import LabelBarChart from '../visualisations/LabelBarChart';
+import BarChart from '../visualisations/BarChart';
 import PieChart from '../visualisations/PieChart';
 import TreeMap from '../visualisations/TreeMap';
 import ArcChart from '../visualisations/ArcChart';
@@ -92,7 +92,7 @@ export class VisualiserContainer extends React.Component {
                         </div>
                         <div className='row'>
                             {!this.state.activeLabel
-                                ? <LabelBarChart id='4' width={this.getWidth(2)} height={this.getHeight(2)} data={this.state.data}/>
+                                ? <BarChart id='4' width={this.getWidth(2)} height={this.getHeight(2)} data={this.state.data}/>
                                 : <RecommendChart id='4' width={this.getWidth(2)} height={this.getHeight(2)} data={this.state.data} filter={this.state.activeLabel}/>
                             }
                         </div>

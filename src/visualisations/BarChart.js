@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
-import { draw } from './helpers/LabelBarChartD3.js';
+import { draw } from './helpers/BarChartD3.js';
 
-const LabelBarChart = (props) => {  
+const BarChart = (props) => {  
   useEffect(() => {
     const labelledDocs = props.data.labelledDocs;
     const predictions = props.data.predictions;
@@ -77,4 +77,4 @@ const LabelBarChart = (props) => {
   )
 }
 
-export default LabelBarChart;
+export default BarChart;

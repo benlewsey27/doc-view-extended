@@ -31,7 +31,7 @@ export const draw = async (props, data, maxCount) => {
   
   const yAxis = g => g
     .attr("transform", `translate(${margin.left}, 0)`)
-    .call(d3.axisLeft(y).ticks(null, data.format))
+    .call(d3.axisLeft(y).tickSizeOuter(0));
   
   svg.append("g").call(xAxis);
   svg.append("g").call(yAxis);
