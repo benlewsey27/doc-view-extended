@@ -17,17 +17,16 @@ const ArcChart = (props) => {
       (dp) => dp.label === props.filter,
     );
 
-    let avgProbabilityRounded;
+    let avgProbability;
     if (predictions.length) {
-      const avgProbability =
+      avgProbability =
         predictions.reduce((i, data) => i + data.probability, 0) /
         predictions.length;
-      avgProbabilityRounded = Math.round(avgProbability * 100) / 100;
     } else {
-      avgProbabilityRounded = 1;
+      avgProbability = 1;
     }
 
-    draw(props, avgProbabilityRounded);
+    draw(props, avgProbability);
   }, [props]);
 
   /**

@@ -123,6 +123,6 @@ export const draw = async (props, data) => {
     .attr('font-size', '12px')
     .attr('fill', 'black')
     .attr('data-width', (d) => d.x1 - d.x0)
-    .text((d) => `${d.data.label} (${d.data.count})`)
+    .text((d) => `${d.data.label} (${d.data.percentage}%)`)
     .call(wordWrapper);
 };

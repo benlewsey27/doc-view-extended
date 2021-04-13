@@ -20,7 +20,7 @@ const TreeMap = (props) => {
       : [];
     const allLabels = userLabels.concat(predictedLabels);
 
-    const data = [{ label: 'Origin' }];
+    let data = [{ label: 'Origin' }];
     if (labels) {
       labels.forEach((label) => {
         const count = allLabels.reduce(
@@ -35,6 +35,19 @@ const TreeMap = (props) => {
         });
       });
     }
+
+    const totalDocuments = allLabels.length;
+    data = data.map((dp) => {
+      const tmp = dp;
+
+      if (tmp.parent) {
+        tmp.percentage = Math.floor(
+          (Math.round((dp.count / totalDocuments) * 100) / 100) * 100,
+        );
+      }
+
+      return tmp;
+    });
 
     draw(props, data);
   }, [props]);
