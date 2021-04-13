@@ -1,35 +1,61 @@
 import { useEffect } from 'react';
-import { draw } from './helpers/TreeMapD3.js';
+import { draw } from './helpers/TreeMapD3';
 
-const TreeMap = (props) => {  
+/**
+ * React container component used to handle the Tree Map visualisation.
+ * Renders the visualisation container and calls d3 graph operations.
+ */
+const TreeMap = (props) => {
+  /**
+   * React callback hook. Formats the document data and calls the d3 graph operations.
+   *
+   * Formats the data to retrieve the number of labels in labelled and unlabelled documents.
+   */
   useEffect(() => {
-    const labelledDocs = props.data.labelledDocs;
-    const predictions = props.data.predictions;
-    const labels = props.data.labels;
+    const { labelledDocs, predictions, labels } = props.data;
 
-    const userLabels = labelledDocs ? labelledDocs.map(dp => dp.label) : [];
-    const predictedLabels = predictions ? predictions.map(dp => dp.label) : [];
+    const userLabels = labelledDocs ? labelledDocs.map((dp) => dp.label) : [];
+    const predictedLabels = predictions
+      ? predictions.map((dp) => dp.label)
+      : [];
     const allLabels = userLabels.concat(predictedLabels);
 
-    let data = [{ label: 'Origin'}];
+    let data = [{ label: 'Origin' }];
     if (labels) {
       labels.forEach((label) => {
-        const count = allLabels.reduce((n, currentLabel) => n + (currentLabel === label), 0);
+        const count = allLabels.reduce(
+          (n, currentLabel) => n + (currentLabel === label),
+          0,
+        );
 
         data.push({
           label,
-          parent: 'Origin', 
+          parent: 'Origin',
           count,
         });
       });
     }
 
+    const totalDocuments = allLabels.length;
+    data = data.map((dp) => {
+      const tmp = dp;
+
+      if (tmp.parent) {
+        tmp.percentage = Math.floor(
+          (Math.round((dp.count / totalDocuments) * 100) / 100) * 100,
+        );
+      }
+
+      return tmp;
+    });
+
     draw(props, data);
   }, [props]);
 
-  return (
-    <div className={`div_${props.id}`}/>
-  )
-}
+  /**
+   * Renders a <div> element to mount the SVG from d3.
+   */
+  return <div className={`div_${props.id}`} />;
+};
 
 export default TreeMap;

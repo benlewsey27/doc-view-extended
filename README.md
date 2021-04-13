@@ -3,6 +3,7 @@
 This tool is meant for researchers to test different methods of text-classification (using active learning) and visualisation of said classification. The application does not give an example of the best solution to these problems, but instead provides out of the box functionality and modularity to allow testing different methods with very few changes to the underlying code.
 
 ## Contributors
+
 - Thomas Torsney-Weir - Project Supervisor
 - Etienne Badoche - DocView Creator (Initial Commit)
 - Benjamin Lewsey - Extended Visualisations
@@ -16,7 +17,7 @@ These instructions assume you have either downloaded or cloned the source code f
 Environment Variables are used to set the data directory and label file paths in the docker-compose configuration. Defaults are stable, but change if required.
 
 ```
-environment: 
+environment:
     - DOC_DIRECTORY=./data/research_papers/
     - LABELS_FILE=./data/labels.json
     - PREDS_FILE=./data/predictions.json
@@ -26,11 +27,11 @@ Note: If using relative filepaths, the code reads the path from the src/classifi
 
 **Data Directory**
 
-For the application to run correctly, a document dataset needs to be added. 
+For the application to run correctly, a document dataset needs to be added.
 
 1. Create a directory to store the documents (e.g. classification/data/research_papers/).
 2. Store the documents (.txt files) in the directory created in step 1.
-2. Set the directory path using an environment variable called `DOC_DIRECTORY`.
+3. Set the directory path using an environment variable called `DOC_DIRECTORY`.
 
 **Label File Paths**
 
@@ -44,9 +45,9 @@ The backend will store the current label state in json files, one for labels and
 
 The application uses docker and docker-compose to handle local deployment.
 
-Ensure docker is installed and running on your device. Then run the following in the terminal:
+Ensure docker is installed and is running on your device. Then run the following in the terminal:
 
-``` bash
+```bash
 docker-compose build
 docker-compose up
 
@@ -58,11 +59,11 @@ docker-compose down
 
 ## Using the application
 
-The application is fairly simple in its usage. If you are running it for the first time, you will be prompted to label some documents. It is up to you how many to label initially. Once you are done labelling, simply press **Finish Labelling** to send the labels to the classification algorithm. Depending on the size of your dataset and the chosen algorithm, it may take some time to return the predictions. 
+The application is fairly simple in its usage. If you are running it for the first time, you will be prompted to label some documents. It is up to you how many to label initially, **but a minimum of two different labels is required**. Once you are done labelling, simply press the **Finish Labelling** button to send the labels to the classification algorithm. Depending on the size of your dataset and the chosen algorithm, it may take some time to return the predictions.
 
 Once the predictions have returned, you will see a list of your documents on the left, with their labels. Documents you have labelled will show green labels, whereas predicted labels will show as blue. Using the search bar allows you to filter the documents by filename.
 
-By default a bar chart will show the number of documents for each label, which takes both user labels and predictions into account. The suggested documents sections will show 10 documents the algorithm is most unsure of.
+On the right hand side, you will see one or more visualisations as well as a list of suggested documents below. The suggested documents sections will show 10 documents the algorithm is most unsure of. More information regarding the visualisations can be found in the `Extended Visualisations` section below.
 
 By clicking on `View` in the navigation bar, you have the option to show or hide the text content of the selected document.
 
@@ -91,51 +92,49 @@ Once the script is ready, you can import it in `server.py`, and comment out the 
 
 You can find the documentation for the python modules in `src\classification\docs\build\html\index.html`.
 
-## Changing the visualisation
+## Changing the visualisations
 
 Changing the visualisation is also simple, although a couple more changes need to be made to the application code.
 
-Within the `visualisation` subfolder in `src`, you will find the different visualisation classes to provide to the application. To create a new one you will need to create a new class. The class constructor should accept:
+Within the `visualisations` subfolder in `src`, you will find the different visualisation components to provide to the application. To create a new one you will need to create a new component, as well as a D3 script within the `helpers` subfolder.
 
-- `DOMElementId`, the id for the parent DOM element to append to
-- `width`, the width of the DOM element
-- `height`, the height of the DOM element
-- `data`, the data object needed to create the graph
+To finish setting up your new visualisation component, you will need to edit `VisualiserContainer`, found in `src\containers`.
 
-The class should draw the graph on construction.
+## Extended Visualisations
 
-The class should also have an `updateChart` method which updates the `width`, `height` and `data`, as well as update the the graph itself.
+The aim of these visualisations is to provide the everyday user with the tools required to gain a better understanding of a document collection.
 
-The `DOMElementId` is supplied so that the created graph can be directly appended to the document upon creation. 
+### Collection Overview Visualisations
 
-To finish setting up your new visualisation class, you will need to edit `VisualiserContainer`, found in `src\containers`.
+In the visualisations section of the user interface the user will initially see five different visualisaions in a dashboard format. Please find a description of each visualisation below.
 
-Import your new class at the top as "Visualisation" and comment the previous visualisation import (or remove it if you no will no longer need it).
+**Tree Map**
+The Tree Map shows the distribution of documents per label. The size of each rectange relates to the relational size of each label within the document collection. The relational size of each label is also shown as a percentage along side the text. The tree map is the main form of interaction within the visualisations.
 
-If your class requires a different set of data, make sure to change the `data` object in both `componentDidMount()` and `componentDidUpdate()`. The `getSelectedLabel()` allows you to get the label for the selected document if you wish for your visualisation to change depending on this.
+**Pie Chart**
+When viewing the collection overview visualisations, the Pie Chart shows the total number of labelled and unlabelled documents in the document collection as a whole. The number of documents is also shown in text below the Pie Chart. The two colours represent the difference between the labelled documents (blue) and unlabelled documents (grey).
 
-## Changing the app
+**History Chart**
+The History Chart uses document metadata to show the number of user labelled documents for the current month. The x-axis shows the day of the week (Mon-Sun) and the y-axis shows the week number (0-5, top to bottom). The more documents labelled, the darker the colour. The colour scheme is spread out over all the dates that month.
 
-Here is some guidance if you wish to make modifications or improvements to the application itself.
+**Stacked Bar Chart**
+The Stacked Bar Chart shows the total number of labelled and unlabelled documents in the document collection per label. The x-axis shows the document labels and the y-axis shows the total number of documents per label. The two colours represent the difference between the labelled documents (blue) and unlabelled documents (grey).
 
-The React logic is separated into containers and components. Containers handle the business logic, whereas components handle the presentation logic.
+### Label-Specific Visualisations
 
-If you wish to change the look of the application, each component has an associated `.css` file, and the bootstrap framework has been included and used in most places. 
+When a label is selected on the Tree Map, some different visualisations are shown on the right hand side. Please find a description of each visualisation below.
 
-Here is an overview of the component hierarchy (wherever a container class is provided, it will be called first and will call its corresponding component):
+> Note: From here, the user can select another label, or return to the collection overview visualisations by clicking on the already selected rectange, coloured in grey.
 
-- App
-    - Navbar
-    - Body
-        - DocList
-            - DocButton
-        - Visualiser
-        - Suggestions
-        - TextReader
-    - Modal
+**Label-Specific Pie Chart**
+The Label-Specific Pie Chart is simular to the collection overview Pie Chart, but is filtered to show the number of labelled and unlabelled documents for a specific label.
 
-JsDoc documentation is provided for every class and function, which you can find in `docs\index.html`.
+**Arc Chart**
+The Arc Chart shows the average strength of predictions for a specific label. The average percentage is also shown in text below the Arc Chart. The blue colour visually represents the average strength of predictions, where 100% probability is a full blue arc.
 
-## Extended Visualisations Notes
+> Note: A full arc may also represent that all documents with a specific label is already labelled. This can be verified by looking at the Label-Specific Pie Chart.
 
-Coming Soon!
+**Recommendation Chart**
+The recommendation chart shows the top three strongest and unlabelled documents. This visualisation aims to provide the user with the most likely documents if they are researching a specific label.
+
+> Note: This visualisation may display less then three rectanges, specifically if there are less than three documents unlabelled with the same estimated label. If all documents are labelled with a specific label, no rectanges will be displayed.

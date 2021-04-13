@@ -1,0 +1,18 @@
+extends:
+  - airbnb-base
+  - prettier
+
+env:
+  es6: true
+  browser: true
+
+parser: babel-eslint
+
+plugins:
+  - react
+  - prettier
+
+rules:
+  prettier/prettier: 'error'
+  no-unused-vars: 'off'
+  import/prefer-default-export: 'off'
