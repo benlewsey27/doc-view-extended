@@ -51,5 +51,5 @@ export const draw = async (props, avgProb) => {
   .attr('text-anchor', 'middle')
   .attr('font-size', '12px')
   .attr('font-weight', 'bold')
-  .text(`${avgProb * 100}%`);
+  .text(`${Math.floor(avgProb * 100)}%`);
 }
