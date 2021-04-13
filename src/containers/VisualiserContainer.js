@@ -6,6 +6,7 @@ import LabelBarChart from '../visualisations/LabelBarChart';
 import PieChart from '../visualisations/PieChart';
 import TreeMap from '../visualisations/TreeMap';
 import ArcChart from '../visualisations/ArcChart';
+import RecommendChart from '../visualisations/RecommendChart';
 
 export class VisualiserContainer extends React.Component {
     constructor(props){
@@ -90,7 +91,10 @@ export class VisualiserContainer extends React.Component {
                             }
                         </div>
                         <div className='row'>
-                            <LabelBarChart id='4' width={this.getWidth(2)} height={this.getHeight(2)} data={this.state.data}/>
+                            {!this.state.activeLabel
+                                ? <LabelBarChart id='4' width={this.getWidth(2)} height={this.getHeight(2)} data={this.state.data}/>
+                                : <RecommendChart id='4' width={this.getWidth(2)} height={this.getHeight(2)} data={this.state.data} filter={this.state.activeLabel}/>
+                            }
                         </div>
                         </div>
                     </div>
