@@ -4,9 +4,14 @@ import { draw } from './helpers/ArcChartD3.js';
 const ArcChart = (props) => {  
   useEffect(() => {
     const predictions = props.data.predictions.filter(dp => dp.label === props.filter);
-    
-    const avgProbability = predictions.reduce((i, data) => i + data.probability, 0) / predictions.length;
-    const avgProbabilityRounded = Math.round(avgProbability * 100) / 100;
+
+    let avgProbabilityRounded;
+    if (predictions.length) {
+      const avgProbability = predictions.reduce((i, data) => i + data.probability, 0) / predictions.length;
+      avgProbabilityRounded = Math.round(avgProbability * 100) / 100;
+    } else {
+      avgProbabilityRounded = 1;
+    }
     
     draw(props, avgProbabilityRounded);
   }, [props]);
