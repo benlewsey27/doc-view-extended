@@ -1,5 +1,12 @@
 import * as d3 from 'd3';
 
+/**
+ * Detects if the text element width is over the rectange width.
+ * If so, the text is split over multiple lines by character.
+ * Also, appends the probability on an additional line.
+ *
+ * @param {Selection} selection - The text node data from d3.
+ */
 function wordWrapper(selection) {
   // eslint-disable-next-line func-names
   selection.each(function () {
@@ -44,6 +51,12 @@ function wordWrapper(selection) {
   });
 }
 
+/**
+ * Generates a SVG element, displaying the visualisaion by using D3.js.
+ *
+ * @param {Object} props - The SVG details passed down from the parent component.
+ * @param {Number} data - The pre-processed data from the parent component.
+ */
 export const draw = async (props, data) => {
   const divClass = `.div_${props.id}`;
   const svgId = `svg_${props.id}`;

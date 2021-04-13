@@ -3,6 +3,12 @@ import * as d3 from 'd3';
 let activeNode = null;
 let setActiveLabel = null;
 
+/**
+ * Detects if the text element width is over the rectange width.
+ * If so, the text is rotated 90 degress and is diplayed vertically.
+ *
+ * @param {Selection} selection - The text node data from d3.
+ */
 function wordWrapper(selection) {
   // eslint-disable-next-line func-names
   selection.each(function (d) {
@@ -33,6 +39,10 @@ function wordWrapper(selection) {
   });
 }
 
+/**
+ * Toggles the background color of the selected label.
+ * Only one label may be selected at a given time.
+ */
 function changeColor() {
   const node = d3.select(this);
 
@@ -50,6 +60,12 @@ function changeColor() {
   setActiveLabel(activeNode.attr('id'));
 }
 
+/**
+ * Generates a SVG element, displaying the visualisaion by using D3.js.
+ *
+ * @param {Object} props - The SVG details passed down from the parent component.
+ * @param {Number} data - The pre-processed data from the parent component.
+ */
 export const draw = async (props, data) => {
   const divClass = `.div_${props.id}`;
   const svgId = `svg_${props.id}`;

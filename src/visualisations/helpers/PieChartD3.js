@@ -1,5 +1,11 @@
 import * as d3 from 'd3';
 
+/**
+ * Generates a SVG element, displaying the visualisaion by using D3.js.
+ *
+ * @param {Object} props - The SVG details passed down from the parent component.
+ * @param {Number} data - The pre-processed data from the parent component.
+ */
 export const draw = async (props, data) => {
   const divClass = `.div_${props.id}`;
   const svgId = `svg_${props.id}`;

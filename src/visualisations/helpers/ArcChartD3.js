@@ -1,5 +1,11 @@
 import * as d3 from 'd3';
 
+/**
+ * Generates a SVG element, displaying the visualisaion by using D3.js.
+ *
+ * @param {Object} props - The SVG details passed down from the parent component.
+ * @param {Number} avgProb - The average probability for a specific label.
+ */
 export const draw = async (props, avgProb) => {
   const divClass = `.div_${props.id}`;
   const svgId = `svg_${props.id}`;

@@ -11,7 +11,17 @@ import TreeMap from '../visualisations/TreeMap';
 import ArcChart from '../visualisations/ArcChart';
 import RecommendChart from '../visualisations/RecommendChart';
 
+/**
+ * React container component used to handle Visualiser operations.
+ * Renders the Visualiser component and calls d3 graph operations.
+ */
 export class VisualiserContainer extends React.Component {
+  /**
+   * Set the initial state.
+   *
+   * @param {Object} props - The React props passed down from the parent component
+   * @constructor
+   */
   constructor(props) {
     super(props);
     this.state = {
@@ -21,13 +31,17 @@ export class VisualiserContainer extends React.Component {
     };
   }
 
+  /**
+   * React callback function. Set data and ensure data is ready when component mounts.
+   */
   componentDidMount() {
+    // Add delay to ensure data is ready.
     setTimeout(() => {
       this.setState({ isReady: true });
     }, 10);
 
     if (this.props.labels && this.props.labels.length) {
-      // Change Predictions Into Array Of Objects
+      // Convert prediction data from nested object to array of objects.
       const newPredictions = [];
       for (const [key, value] of Object.entries(this.props.predictions)) {
         const newObject = {
@@ -37,7 +51,7 @@ export class VisualiserContainer extends React.Component {
         newPredictions.push(newObject);
       }
 
-      // Change LabelledDocs Into Array Of Objects
+      // Convert labelled data from nested object to array of objects.
       const newLabelledDocs = [];
       for (const [key, value] of Object.entries(this.props.labelledDocs)) {
         const newObject = {
@@ -58,8 +72,16 @@ export class VisualiserContainer extends React.Component {
     }
   }
 
+  /**
+   * Calculates the desired width of the visualisation
+   * based from the number of columns.
+   *
+   * @param {Number} cols - The number of columns.
+   * @returns {Number} - The desired width of the visualisaion.
+   */
   getWidth(cols) {
     const docListPanel = document.getElementById('doc-list');
+
     return (
       (Math.max(document.documentElement.clientWidth, window.innerWidth || 0) -
         docListPanel.offsetWidth) /
@@ -68,9 +90,17 @@ export class VisualiserContainer extends React.Component {
     );
   }
 
+  /**
+   * Calculates the desired height of the visualisation
+   * based from the number of rows.
+   *
+   * @param {Number} rows - The number of rows.
+   * @returns {Number} - The desired height of the visualisaion.
+   */
   getHeight(rows) {
     const navPanel = document.getElementById('nav-panel');
     const suggestionsPanel = document.getElementById('suggestions');
+
     return (
       (Math.max(
         document.documentElement.clientHeight,
@@ -83,6 +113,11 @@ export class VisualiserContainer extends React.Component {
     );
   }
 
+  /**
+   * Gets the label for the currently active doc
+   *
+   * @returns {String} - The active document's label
+   */
   getSelectedLabel() {
     if (this.props.activeDoc in this.props.labelledDocs) {
       return this.props.labelledDocs[this.props.activeDoc].label;
@@ -91,10 +126,20 @@ export class VisualiserContainer extends React.Component {
     return this.props.predictions[this.props.activeDoc].label;
   }
 
+  /**
+   * Sets the active label from the TreeMap Component
+   *
+   * @param {String} label - The active label.
+   */
   setActiveLabel(label) {
     this.setState({ activeLabel: label });
   }
 
+  /**
+   * Render the Visualiser component.
+   *
+   * @returns {React.Component} - Visualiser Component
+   */
   render() {
     return (
       <div className="container-fluid">
@@ -162,6 +207,7 @@ export class VisualiserContainer extends React.Component {
   }
 }
 
+// React PropTypes object
 VisualiserContainer.propTypes = {
   labelledDocs: PropTypes.object,
   predictions: PropTypes.object,

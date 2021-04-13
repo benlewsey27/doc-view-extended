@@ -1,7 +1,17 @@
 import { useEffect } from 'react';
 import { draw } from './helpers/HistoryChartD3';
 
+/**
+ * React container component used to handle the History visualisation.
+ * Renders the visualisation container and calls d3 graph operations.
+ */
 const HistoryChart = (props) => {
+  /**
+   * React callback hook. Formats the document data and calls the d3 graph operations.
+   *
+   * Formats the data to retrieve the number of documents labelled in a day and week number.
+   * Filters the data to retrieve only the data for the current month.
+   */
   useEffect(() => {
     const { labelledDocs } = props.data;
 
@@ -105,6 +115,9 @@ const HistoryChart = (props) => {
     draw(props, data, maxCount);
   }, [props]);
 
+  /**
+   * Renders a <div> element to mount the SVG from d3.
+   */
   return <div className={`div_${props.id}`} />;
 };
 

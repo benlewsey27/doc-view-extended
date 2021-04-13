@@ -1,7 +1,16 @@
 import { useEffect } from 'react';
 import { draw } from './helpers/BarChartD3';
 
+/**
+ * React container component used to handle the Stacked Bar Chart visualisation.
+ * Renders the visualisation container and calls d3 graph operations.
+ */
 const BarChart = (props) => {
+  /**
+   * React callback hook. Formats the document data and calls the d3 graph operations.
+   *
+   * Formats the data to retrieve the number of labelled and unlabelled documents per label.
+   */
   useEffect(() => {
     const { labelledDocs, predictions, labels } = props.data;
 
@@ -78,6 +87,9 @@ const BarChart = (props) => {
     draw(props, data, maxCount);
   }, [props]);
 
+  /**
+   * Renders a <div> element to mount the SVG from d3.
+   */
   return <div className={`div_${props.id}`} />;
 };
 

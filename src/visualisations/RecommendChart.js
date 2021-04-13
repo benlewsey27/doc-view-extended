@@ -1,7 +1,16 @@
 import { useEffect } from 'react';
 import { draw } from './helpers/RecommendChartD3';
 
+/**
+ * React container component used to handle the Recommended Documents visualisation.
+ * Renders the visualisation container and calls d3 graph operations.
+ */
 const RecommendChart = (props) => {
+  /**
+   * React callback hook. Formats the document data and calls the d3 graph operations.
+   *
+   * Formats the data to retrieve the top three most probable documents with a specific label.
+   */
   useEffect(() => {
     let { predictions } = props.data;
 
@@ -27,6 +36,9 @@ const RecommendChart = (props) => {
     draw(props, data);
   }, [props]);
 
+  /**
+   * Renders a <div> element to mount the SVG from d3.
+   */
   return <div className={`div_${props.id}`} />;
 };
 
