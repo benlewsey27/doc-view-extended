@@ -133,30 +133,34 @@ export class AppContainer extends React.Component {
    * Send new labels to Python Flask server, which returns prediction data.
    */
   sendLabels() {
-    if (Object.keys(this.state.labelledDocs).length !== 0) {
-      this.handleHideModal();
-      this.setState({ loading: true });
-
-      // Use fetch with POST header to send data
-      fetch('/api/add_labels', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(this.state.labelledDocs),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          const docsToLabel = this.getDocsToLabel(data);
-
-          this.setState({
-            activeDoc: Object.keys(this.state.docs)[0],
-            predictions: data,
-            docsToLabel,
-            loading: false,
-          });
-        });
+    if (this.state.labels.length < 2) {
+      // eslint-disable-next-line no-alert
+      alert('There must be at least 2 unique labels! Please continue.');
+      return;
     }
+
+    this.handleHideModal();
+    this.setState({ loading: true });
+
+    // Use fetch with POST header to send data
+    fetch('/api/add_labels', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(this.state.labelledDocs),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        const docsToLabel = this.getDocsToLabel(data);
+
+        this.setState({
+          activeDoc: Object.keys(this.state.docs)[0],
+          predictions: data,
+          docsToLabel,
+          loading: false,
+        });
+      });
   }
 
   /**
@@ -180,7 +184,10 @@ export class AppContainer extends React.Component {
    * Send request to Python Flask server to reset label and prediction data.
    */
   resetData() {
-    fetch('/api/reset_data').then(this.getData());
+    fetch('/api/reset_data').then(() => {
+      // Add 1 second delay to ensure the files are deleted.
+      setTimeout(this.getData(), 1000);
+    });
   }
 
   /**
