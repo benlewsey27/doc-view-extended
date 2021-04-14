@@ -93,7 +93,7 @@ export const draw = async (props, data) => {
     .parentId((d) => d.parent);
 
   const root = rootGenerator(data);
-  root.sum((d) => +d.count);
+  root.sum((d) => (d.percentage <= 5 ? +d.count + 20 : +d.count));
 
   d3.treemap().size([width, height]).padding(5)(root);
 
@@ -123,6 +123,6 @@ export const draw = async (props, data) => {
     .attr('font-size', '12px')
     .attr('fill', 'black')
     .attr('data-width', (d) => d.x1 - d.x0)
-    .text((d) => `${d.data.label} (${d.data.percentage}%)`)
+    .text((d) => `${d.data.label} (${d.data.count})`)
     .call(wordWrapper);
 };
