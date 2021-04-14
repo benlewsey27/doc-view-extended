@@ -122,6 +122,7 @@ export class AppContainer extends React.Component {
           activeDoc: Object.keys(docs)[0],
           loading: false,
           showModal: !data.labelled,
+          repeatModal: !data.labelled,
           predictions: data.predictions,
           docsToLabel,
           labels,
